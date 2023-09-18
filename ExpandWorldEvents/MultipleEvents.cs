@@ -26,6 +26,7 @@ public class MultipleEvents
       var playerInArea = __instance.IsAnyPlayerInEventArea(x);
       return x.Update(true, true, playerInArea, Time.fixedDeltaTime);
     }).ToList();
+    expired.ForEach(x => x.OnStop());
     Events.RemoveAll(expired.Contains);
     if (obj.m_forcedEvent != null)
       obj.SetActiveEvent(obj.m_forcedEvent);
@@ -51,6 +52,7 @@ public class MultipleEvents
     if (Helper.IsClient() || !Configuration.MultipleEvents) return true;
     if (ev == null)
     {
+      // For stopevent command.
       Events.ForEach(x => x.OnStop());
       Events.Clear();
       return false;
