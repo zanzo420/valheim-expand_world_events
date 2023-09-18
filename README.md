@@ -2,11 +2,11 @@
 
 Allows configuring the random event system.
 
-Install on the server (modding [guide](https://youtu.be/L9ljm2eKLrk)).
+Install on all clients and the server (modding [guide](https://youtu.be/L9ljm2eKLrk)).
 
-Install on the clients to access all features.
+Install [Expand World Data](https://valheim.thunderstore.io/package/JereKuusela/Expand_World_Data/).
 
-Install Expand World Data.
+Some features only require server installation.
 
 ## Features
 
@@ -15,33 +15,6 @@ Install Expand World Data.
 - Change event frequency.
 
 Server side mode can be enabled from Expand World Data config.
-
-## Server side features
-
-This mod can be used server only, without requiring clients to have it. However only following files can be configured:
-
-- All settings in the `expand_events.cfg`
-- Following fields in the `expand_events.yaml`:
-  - enabled
-  - duration
-  - nearBaseOnly
-  - biome
-  - requiredGlobalKeys
-  - notRequiredGlobalKeys
-  - pauseIfNoPlayerInArea
-
-### Server side
-
-This mod can be used server only, without requiring clients to have it. However only following files can be configured:
-
-- `expand_dungeons.yaml`: All fields.
-- `expand_events.yaml`: Fields enabled, duration, nearBaseOnly, biome, requiredGlobalKeys, notRequiredGlobalKeys, pauseIfNoPlayerInArea, random.
-- `expand_locations.yaml`: All fields, but some disabled locations won't work.
-- `expand_rooms.yaml`: All fields.
-- `expand_vegetation.yaml`: All fields.
-- `expand_world.cfg`: Only settings Random event chance, Random event interval and Zone spawners.
-
-When doing this, enable `Server only` on the config to remove version check.
 
 ## Configuration
 
@@ -53,6 +26,8 @@ The file `expand_world/expand_events.yaml` is created when loading a world.
 
 ### expand_events.cfg
 
+All settings are server side:
+
 - Random event interval (default: `46` minutes): How often the game tries to start a random event.
 - Random event change (default: `20` percent): The chance to try starting a random event.
 - Multiple events (default: `false`): If enabled, multiple events can be active at the same time.
@@ -63,24 +38,40 @@ The file `expand_world/expand_events.yaml` is created when loading a world.
 
 ### expand_events.yaml
 
+Client side fields:
+
 - name: Identifier.
   - Multiple events can have the same name. This allows creating multiple configurations.
-  - Spawns and other client side fields always come from the first event.
-- enabled (default: `false`): Quick way to disable this entry.
+  - Client side fields always come from the first event. Recommended to not include these in the extra configurations.
+- spawns: List of spawned objects.
+  - See expand_world_spawns for more info.
+  - Usually these have lower spawn times and less restrictions compared to normal spawns.
+- startMessage: Message shown on the screen during the event.
+- endMessage: Message shown on the screen when the event ends.
+- forceMusic: Event music.
+- forceEnvironment: Event environment/weather.
+
+Server side fields:
+
+- enabled (default: `true`): Quick way to disable this entry.
 - duration (default: `60` seconds): How long the event lasts.
 - nearBaseOnly (default: `true`): Only triggers when near 3 player base items.
-- biome: List of possible biomes.
+- pauseIfNoPlayerInArea (default: `true`): The event timer pauses if no player in the area.
+- biome: List of required biomes.
+- random (default: `true`): The event can happen randomly (unlike boss events which happen when near a boss).
+- requiredEnvironments: List of valid environments/weathers. Checked by the server so using `env` command in the client doesn't affect this.
 - requiredGlobalKeys: Event becomes available if the world has any of these keys.
 - notRequiredGlobalKeys: Event is not available if the world has any of these keys.
 - requiredPlayerKeys: Event becomes available if the player has any of these keys.
 - notRequiredPlayerKeys: Event is not available if the player has any of these keys.
 - requiredKnownItems: Event becomes available if the player knows any of these items.
 - notRequiredKnownItems: Event is not available if the player knows any of these items.
-- startMessage: Message shown on the screen during the event.
-- endMessage: The end message.
-- forceMusic: Event music.
-- forceEnvironment: Event environment/weather.
-- requiredEnvironments: List of valid environments/weathers. Checked by the server so using `env` command in the client doesn't affect this.
-- spawns: List of spawned objects. See spawns section for more info. Usually these have lower spawn times and less restrictions compared to normal spawns.
-- pauseIfNoPlayerInArea (default: `true`): The event timer pauses if no player in the area.
-- random (default: `true`): The event can happen randomly (unlike boss events which happen when near a boss).
+
+## Credits
+
+Thanks for Azumatt for creating the mod icon!
+
+Thanks for blaxxun for creating the server sync!
+
+Sources: [GitHub](https://github.com/JereKuusela/valheim-expand_world_events)
+Donations: [Buy me a computer](https://www.buymeacoffee.com/jerekuusela)
