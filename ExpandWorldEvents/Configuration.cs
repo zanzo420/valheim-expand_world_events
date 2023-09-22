@@ -5,7 +5,7 @@ using HarmonyLib;
 using ServerSync;
 using Service;
 
-namespace EWE;
+namespace ExpandWorld;
 public partial class Configuration
 {
 #nullable disable
@@ -32,8 +32,9 @@ public partial class Configuration
     configEventChance.SettingChanged += (s, e) => RandomEventSystem.Setup(RandEventSystem.instance);
     configEventInterval = wrapper.BindFloat(section, "Random event interval", 46, false, "How often the random events are checked (minutes).");
     configEventInterval.SettingChanged += (s, e) => RandomEventSystem.Setup(RandEventSystem.instance);
+    RandomEventSystem.Setup(RandEventSystem.instance);
     valueEventData = wrapper.AddValue("event_data");
-    valueEventData.ValueChanged += () => EventManager.FromSetting(valueEventData.Value);
+    valueEventData.ValueChanged += () => Event.Manager.FromSetting(valueEventData.Value);
   }
 }
 

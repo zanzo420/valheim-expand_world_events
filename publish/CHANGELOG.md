@@ -1,2 +1,2 @@
 - v1.0
-  - Initial release.
+  - Initial release. Split from Expand World Data mod.

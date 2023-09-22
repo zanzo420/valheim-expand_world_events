@@ -1,7 +1,7 @@
 using HarmonyLib;
 using UnityEngine;
 
-namespace EWE;
+namespace ExpandWorld.Event;
 
 [HarmonyPatch(typeof(RandEventSystem), nameof(RandEventSystem.InValidBiome))]
 public class RequiredEnvironment
@@ -9,7 +9,7 @@ public class RequiredEnvironment
   static bool Postfix(bool result, RandomEvent ev, Vector3 point)
   {
     if (!result) return false;
-    if (!EventManager.EventToRequirentEnvironment.TryGetValue(ev, out var required)) return true;
+    if (!Loader.EventToRequirentEnvironment.TryGetValue(ev, out var required)) return true;
     if (required.Count == 0) return true;
     var biome = WorldGenerator.instance.GetBiome(point);
     var em = EnvMan.instance;

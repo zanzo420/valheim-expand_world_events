@@ -44,7 +44,7 @@ Client side fields:
   - Multiple events can have the same name. This allows creating multiple configurations.
   - Client side fields always come from the first event. Recommended to not include these in the extra configurations.
 - spawns: List of spawned objects.
-  - See expand_world_spawns for more info.
+  - See [Expand World Spawns](https://github.com/JereKuusela/valheim-expand_world_spawns/#Configuration) for more info.
   - Usually these have lower spawn times and less restrictions compared to normal spawns.
 - startMessage: Message shown on the screen during the event.
 - endMessage: Message shown on the screen when the event ends.

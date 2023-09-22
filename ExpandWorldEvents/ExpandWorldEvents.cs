@@ -4,9 +4,9 @@ using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
 using Service;
-namespace EWE;
+namespace ExpandWorld;
 [BepInPlugin(GUID, NAME, VERSION)]
-[BepInIncompatibility("expand_world")]
+[BepInDependency("expand_world_data", BepInDependency.DependencyFlags.HardDependency)]
 public class EWE : BaseUnityPlugin
 {
   public const string GUID = "expand_world_events";
@@ -14,8 +14,10 @@ public class EWE : BaseUnityPlugin
   public const string VERSION = "1.0";
 #nullable disable
   public static ManualLogSource Log;
-  public static EWE Instance;
 #nullable enable
+  public static void LogWarning(string message) => Log.LogWarning(message);
+  public static void LogError(string message) => Log.LogError(message);
+  public static void LogInfo(string message) => Log.LogInfo(message);
   public static ServerSync.ConfigSync ConfigSync = new(GUID)
   {
     DisplayName = NAME,
@@ -25,22 +27,10 @@ public class EWE : BaseUnityPlugin
   };
   public static string ConfigName = $"{GUID}.cfg";
   public static bool NeedsMigration = File.Exists(Path.Combine(Paths.ConfigPath, "expand_world.cfg")) && !File.Exists(Path.Combine(Paths.ConfigPath, ConfigName));
-  public static string YamlDirectory = Path.Combine(Paths.ConfigPath, "expand_world");
-  public void InvokeRegenerate()
-  {
-    // Nothing to regenerate because the world hasn't been generated yet.
-    if (WorldGenerator.instance?.m_world?.m_menu != false) return;
-    // Debounced for smooth config editing.
-    CancelInvoke("Regenerate");
-    Invoke("Regenerate", 1.0f);
-  }
   public void Awake()
   {
-    Instance = this;
     Log = Logger;
-    if (!Directory.Exists(YamlDirectory))
-      Directory.CreateDirectory(YamlDirectory);
-    ConfigWrapper wrapper = new("expand_config", Config, ConfigSync, InvokeRegenerate);
+    ConfigWrapper wrapper = new("expand_events_config", Config, ConfigSync, () => { });
     Configuration.Init(wrapper);
     if (NeedsMigration)
     {
@@ -54,7 +44,7 @@ public class EWE : BaseUnityPlugin
       if (ExpandWorldData.Configuration.DataReload)
       {
         SetupWatcher();
-        EventManager.SetupWatcher();
+        Event.Manager.SetupWatcher();
       }
     }
     catch (Exception e)

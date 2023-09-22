@@ -4,7 +4,7 @@ using ExpandWorldData;
 using HarmonyLib;
 using UnityEngine;
 
-namespace EWE;
+namespace ExpandWorld.Event;
 
 [HarmonyPatch(typeof(RandEventSystem))]
 public class MultipleEvents
@@ -84,7 +84,7 @@ public class MultipleEvents
     {
       if (peer.m_rpc == null) return;
       var randomEvent = Events.OrderBy(x => Utils.DistanceXZ(x.m_pos, peer.m_refPos)).First();
-      peer.m_rpc.Invoke("SetEvent", [randomEvent.m_name, randomEvent.m_time, randomEvent.m_pos]);
+      ZRoutedRpc.instance.InvokeRoutedRPC(peer.m_uid, "SetEvent", [randomEvent.m_name, randomEvent.m_time, randomEvent.m_pos]);
     });
     return false;
   }

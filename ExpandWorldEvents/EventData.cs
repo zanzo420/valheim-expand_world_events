@@ -1,8 +1,7 @@
 using System.ComponentModel;
-using ExpandWorldData;
-namespace EWE;
+namespace ExpandWorld.Event;
 
-public class EventData
+public class Data
 {
   public string name = "";
   [DefaultValue(true)]
@@ -34,7 +33,7 @@ public class EventData
   public string forceMusic = "";
   [DefaultValue("")]
   public string forceEnvironment = "";
-  public SpawnData[] spawns = [];
+  public Spawn.Data[] spawns = [];
   [DefaultValue(true)]
   public bool pauseIfNoPlayerInArea = true;
   [DefaultValue(true)]
