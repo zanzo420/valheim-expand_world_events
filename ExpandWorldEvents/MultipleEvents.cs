@@ -9,8 +9,7 @@ namespace ExpandWorld.Event;
 [HarmonyPatch(typeof(RandEventSystem))]
 public class MultipleEvents
 {
-  private static readonly List<RandomEvent> Events = [];
-
+  public static readonly List<RandomEvent> Events = [];
 
   [HarmonyPatch(nameof(RandEventSystem.FixedUpdate)), HarmonyPrefix]
   static bool FixedUpdate(RandEventSystem __instance)
