@@ -1,3 +1,6 @@
+- v1.3
+  - Fixes error if an event is using a non-existent creature.
+
 - v1.2
   - Fixed for the new patch.
 

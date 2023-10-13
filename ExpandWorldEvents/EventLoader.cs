@@ -15,7 +15,7 @@ public class Loader
     RandomEvent random = new()
     {
       m_name = data.name,
-      m_spawn = data.spawns.Select(Spawn.Loader.FromData).ToList(),
+      m_spawn = data.spawns.Select(Spawn.Loader.FromData).Where(s => s.m_prefab).ToList(),
       m_enabled = data.enabled,
       m_random = data.random,
       m_duration = data.duration,

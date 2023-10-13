@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BepInEx;
@@ -15,7 +14,7 @@ public class EWE : BaseUnityPlugin
 {
   public const string GUID = "expand_world_events";
   public const string NAME = "Expand World Events";
-  public const string VERSION = "1.2";
+  public const string VERSION = "1.3";
 #nullable disable
   public static ManualLogSource Log;
 #nullable enable
