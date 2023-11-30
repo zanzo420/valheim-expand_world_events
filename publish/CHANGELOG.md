@@ -1,3 +1,7 @@
+- v1.4
+  - Adds a new field `faction` to spawn data. Requires using Expand World Factions.
+  - Adds a new setting to check event roll for each player separately.
+
 - v1.3
   - Fixes error if an event is using a non-existent creature.
 

@@ -62,6 +62,8 @@ public class Data
   [DefaultValue(-1f)]
   public float overrideLevelupChance = -1f;
   [DefaultValue("")]
+  public string faction = "";
+  [DefaultValue("")]
   public string data = "";
   [DefaultValue(null)]
   public string[]? objects = null;

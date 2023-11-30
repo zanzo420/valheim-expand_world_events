@@ -13,6 +13,8 @@ public partial class Configuration
   public static bool MultipleEvents => configMultipleEvents.Value;
   public static ConfigEntry<string> configEventMinimumDistance;
   public static float EventMinimumDistance => ConfigWrapper.Floats[configEventMinimumDistance];
+  public static bool CheckPerPlayer => configCheckPerPlayer.Value;
+  public static ConfigEntry<bool> configCheckPerPlayer;
 
 
   public static ConfigEntry<string> configEventInterval;
@@ -26,6 +28,7 @@ public partial class Configuration
   {
     var section = "1. General";
     configMultipleEvents = wrapper.Bind(section, "Multiple events", false, false, "If enabled, multiple events can be active at the same time.");
+    configCheckPerPlayer = wrapper.Bind(section, "Check per player", false, false, "If enabled, the event check is done separately for each player.");
     configEventMinimumDistance = wrapper.BindFloat(section, "Minimum distance between events", 100, false, "The minimum distance between events.");
 
     configEventChance = wrapper.BindFloat(section, "Random event chance", 20, false, "The chance to try starting a random event.");
@@ -35,6 +38,7 @@ public partial class Configuration
     RandomEventSystem.Setup(RandEventSystem.instance);
     valueEventData = wrapper.AddValue("event_data");
     valueEventData.ValueChanged += () => Event.Manager.FromSetting(valueEventData.Value);
+
   }
 }
 
