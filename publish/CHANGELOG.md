@@ -1,4 +1,5 @@
 - v1.5
+  - Adds a new field `eventLimit` to filter events by the amount of nearby events (when Multiple Events is on).
   - Adds a new field `playerLimit` to filter events by the amount of nearby players.
   - Adds a new field `playerDistance` to set the distance of nearby players.
   - Changes the field `nearBaseOnly` to support numbers.

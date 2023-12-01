@@ -51,7 +51,7 @@ public class EWE : BaseUnityPlugin
   public static RandomEvent GetCurrentRandomEvent(Vector3 pos)
   {
     if (Configuration.MultipleEvents)
-      return MultipleEvents.Events.OrderBy(x => Utils.DistanceXZ(x.m_pos, pos)).FirstOrDefault();
+      return MultipleEvents.Events.OrderBy(x => Utils.DistanceXZ(x.Event.m_pos, pos)).FirstOrDefault()?.Event!;
     return RandEventSystem.instance.GetCurrentRandomEvent();
   }
 #pragma warning disable IDE0051

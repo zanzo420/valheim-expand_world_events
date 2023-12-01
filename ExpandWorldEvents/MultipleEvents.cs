@@ -6,10 +6,16 @@ using UnityEngine;
 
 namespace ExpandWorld.Event;
 
+public class MultiEvent(RandomEvent ev, int count)
+{
+  public RandomEvent Event = ev;
+  public int Count = count;
+}
+
 [HarmonyPatch(typeof(RandEventSystem))]
 public class MultipleEvents
 {
-  public static readonly List<RandomEvent> Events = [];
+  public static readonly List<MultiEvent> Events = [];
 
   [HarmonyPatch(nameof(RandEventSystem.FixedUpdate)), HarmonyPrefix]
   static bool FixedUpdate(RandEventSystem __instance)
@@ -22,10 +28,10 @@ public class MultipleEvents
     obj.m_forcedEvent?.Update(true, true, true, dt);
     var expired = Events.Where(x =>
     {
-      var playerInArea = __instance.IsAnyPlayerInEventArea(x);
-      return x.Update(true, true, playerInArea, Time.fixedDeltaTime);
+      var playerInArea = __instance.IsAnyPlayerInEventArea(x.Event);
+      return x.Event.Update(true, true, playerInArea, Time.fixedDeltaTime);
     }).ToList();
-    expired.ForEach(x => x.OnStop());
+    expired.ForEach(x => x.Event.OnStop());
     Events.RemoveAll(expired.Contains);
     if (obj.m_forcedEvent != null)
       obj.SetActiveEvent(obj.m_forcedEvent);
@@ -33,7 +39,7 @@ public class MultipleEvents
     {
       // This is simply for testing in single player.
       // Dedicated server doesn't need m_randomEvent for anything.
-      var randomEvent = Events.OrderBy(x => Utils.DistanceXZ(x.m_pos, Player.m_localPlayer.transform.position)).FirstOrDefault();
+      var randomEvent = Events.OrderBy(x => Utils.DistanceXZ(x.Event.m_pos, Player.m_localPlayer.transform.position)).FirstOrDefault()?.Event;
       obj.m_randomEvent = randomEvent;
       if (randomEvent != null && obj.IsInsideRandomEventArea(randomEvent, Player.m_localPlayer.transform.position))
         __instance.SetActiveEvent(randomEvent);
@@ -52,18 +58,19 @@ public class MultipleEvents
     if (ev == null)
     {
       // For stopevent command.
-      Events.ForEach(x => x.OnStop());
+      Events.ForEach(x => x.Event.OnStop());
       Events.Clear();
       return false;
     }
-    var nearbyEvents = Events.Where(x => Utils.DistanceXZ(x.m_pos, pos) < Configuration.EventMinimumDistance).ToList();
-    nearbyEvents.ForEach(x => x.OnStop());
+    var nearbyEvents = Events.Where(x => Utils.DistanceXZ(x.Event.m_pos, pos) < Configuration.EventMinimumDistance).ToList();
+    nearbyEvents.ForEach(x => x.Event.OnStop());
     Events.RemoveAll(nearbyEvents.Contains);
 
     var randomEvent = ev.Clone();
     randomEvent.m_pos = pos;
     randomEvent.OnStart();
-    Events.Add(randomEvent);
+    var count = nearbyEvents.Sum(x => x.Count) + 1;
+    Events.Add(new(randomEvent, count));
     __instance.SendCurrentRandomEvent();
     return false;
   }
@@ -74,7 +81,7 @@ public class MultipleEvents
     if (Helper.IsClient() || !Configuration.MultipleEvents || Events.Count == 0) return true;
     if (Events.Count == 1)
     {
-      var randomEvent = Events.First();
+      var randomEvent = Events.First().Event;
       ZRoutedRpc.instance.InvokeRoutedRPC(ZRoutedRpc.Everybody, "SetEvent", [randomEvent.m_name, randomEvent.m_time, randomEvent.m_pos]);
       return false;
     }
@@ -82,7 +89,7 @@ public class MultipleEvents
     peers.ForEach(peer =>
     {
       if (peer.m_rpc == null) return;
-      var randomEvent = Events.OrderBy(x => Utils.DistanceXZ(x.m_pos, peer.m_refPos)).First();
+      var randomEvent = Events.OrderBy(x => Utils.DistanceXZ(x.Event.m_pos, peer.m_refPos)).First().Event;
       ZRoutedRpc.instance.InvokeRoutedRPC(peer.m_uid, "SetEvent", [randomEvent.m_name, randomEvent.m_time, randomEvent.m_pos]);
     });
     return false;

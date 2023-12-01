@@ -9,11 +9,13 @@ namespace ExpandWorld.Event;
 [HarmonyPatch(typeof(RandEventSystem), nameof(RandEventSystem.InValidBiome))]
 public class ExtraChecks
 {
-  static bool Postfix(bool result, RandomEvent ev, Vector3 pos)
+  static bool Postfix(bool result, RandomEvent ev, Vector3 point)
   {
     if (!result) return false;
     if (!Loader.ExtraData.TryGetValue(ev, out var data)) return true;
-    if (!EnvCheck(pos, data.RequiredEnvironments)) return false;
+    if (!EnvCheck(point, data.RequiredEnvironments)) return false;
+    if (!PlayerCheck(point, data.PlayerLimit, data.PlayerDistance)) return false;
+    if (!EventCheck(point, data.EventLimit)) return false;
     return true;
   }
   private static bool EnvCheck(Vector3 pos, List<string> required)
@@ -34,6 +36,13 @@ public class ExtraChecks
   {
     if (limit == null) return true;
     var within = RandEventSystem.RefreshPlayerEventData().Where(p => Utils.DistanceXZ(pos, p.position) <= distance).Count();
+    return limit.Min <= within && within <= limit.Max;
+  }
+  private static bool EventCheck(Vector3 pos, Range<int>? limit)
+  {
+    if (limit == null) return true;
+    if (!Configuration.MultipleEvents) return true;
+    var within = MultipleEvents.Events.Where(p => Utils.DistanceXZ(pos, p.Event.m_pos) <= Configuration.EventMinimumDistance).Sum(p => p.Count);
     return limit.Min <= within && within <= limit.Max;
   }
 }

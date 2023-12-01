@@ -44,6 +44,8 @@ public class Data
   public float playerDistance = 100f;
   [DefaultValue("")]
   public string playerLimit = "";
+  [DefaultValue("")]
+  public string eventLimit = "";
 }
 public class ExtraData
 {
@@ -51,6 +53,7 @@ public class ExtraData
   public float PlayerDistance = 100f;
   public Range<int>? PlayerLimit;
   public int BaseValue = 3;
+  public Range<int>? EventLimit;
 
   public ExtraData(Data data)
   {
@@ -58,6 +61,8 @@ public class ExtraData
     PlayerDistance = data.playerDistance;
     if (data.playerLimit != "")
       PlayerLimit = Parse.IntRange(data.playerLimit);
+    if (data.eventLimit != "")
+      EventLimit = Parse.IntRange(data.eventLimit);
     if (data.nearBaseOnly != "true")
       BaseValue = Parse.Int(data.nearBaseOnly, 0);
   }

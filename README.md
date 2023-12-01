@@ -28,13 +28,17 @@ The file `expand_world/expand_events.yaml` is created when loading a world.
 
 All settings are server side:
 
-- Random event interval (default: `46` minutes): How often the game tries to start a random event.
-- Random event change (default: `20` percent): The chance to try starting a random event.
-- Multiple events (default: `false`): If enabled, multiple events can be active at the same time.
+- **Random event interval**: How often the game tries to start a random event.
+  - Default is `46` minutes.
+- **Random event change**: The chance to try starting a random event.
+  - Default is `20` percent.
+- **Multiple events**: If enabled, multiple events can be active at the same time.
+  - Default is `false`.
   - When a new event starts, the previous one stays active (unless too close).
   - Clients receive the closest event.
   - Active events are not saved to the save file. Restarting the server removes active events.
-- Minimum distance between events (default: `100` meters): When multiple events are enabled, new events cancel previous events within this distance.
+- **Minimum distance between events**: When multiple events are enabled, new events cancel previous events within this distance.
+  - Default is `100` meters.
 
 ### expand_events.yaml
 
@@ -75,11 +79,13 @@ Server side fields:
 - **requiredKnownItems**: Event becomes available if the player knows any of these items.
 - **notRequiredKnownItems**: Event is not available if the player knows any of these items.
 - **playerLimit**: Amount of required players in the area (`min-max`).
-  - Default value is no limit.
-  - This is checked around the player that triggered the event. The player itself is also included.
-  - Both values are inclusive. For example `1-4` would trigger with 1, 2, 3 or 4 players.
+  - This can be used to trigger stronger events when more players are nearby.
+  - The value is inclusive. For example `1-2` would trigger with 1 and 2 players.
 - **playerDistance**: Distance from the triggering player.
   - Default value is `100` meters.
+- **eventLimit**: Amount of required events in the area (`min-max`).
+  - Requires **Multiple events** to be enabled. The distance is **Minimum distance between events**.
+  - This can be used to trigger stronger events when multiple events trigger at the same time.
 
 ## Credits
 
