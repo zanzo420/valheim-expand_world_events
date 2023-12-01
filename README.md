@@ -30,7 +30,7 @@ All settings are server side:
 
 - **Random event interval**: How often the game tries to start a random event.
   - Default is `46` minutes.
-- **Random event change**: The chance to try starting a random event.
+- **Random event chance**: The chance to try starting a random event.
   - Default is `20` percent.
 - **Multiple events**: If enabled, multiple events can be active at the same time.
   - Default is `false`.
@@ -39,6 +39,9 @@ All settings are server side:
   - Active events are not saved to the save file. Restarting the server removes active events.
 - **Minimum distance between events**: When multiple events are enabled, new events cancel previous events within this distance.
   - Default is `100` meters.
+- **Check per player**: If enabled, the event check is done separately for each player.
+  - Default is `false`.
+  - This makes events much more likely to happen.
 
 ### expand_events.yaml
 
@@ -85,7 +88,37 @@ Server side fields:
   - Default value is `100` meters.
 - **eventLimit**: Amount of required events in the area (`min-max`).
   - Requires **Multiple events** to be enabled. The distance is **Minimum distance between events**.
+  - Recommended to enable **Check per player**. Otherwise multiple events can't trigger at the same time.
   - This can be used to trigger stronger events when multiple events trigger at the same time.
+
+### Player limit / event limit
+
+Recommended to **not** use both because their effects are similar.
+
+Event limit gives more gradual results, but requires multiple events to be enabled.
+
+For example 2 players and 50% event chance causes:
+
+- 0 events: 25% chance
+- 1 event: 50% chance
+- 2 events: 25% chance
+
+With player limits **1** and **2-100**:
+
+- If event triggers, the limit **2-100** always triggers.
+- Third player has no effect (limit **2-100** already always triggers).
+
+With player limits **1-2** and **2-100**:
+
+- If event triggers, both limits have 50% chance to trigger.
+- Third player would cause the limit **2-100** alway to trigger.
+
+With event limits **0** and **1-100**:
+
+- If event triggers, 66% chance for limit **0** and 33% chance for limit **1-100**.
+- Third player would cause 43% chance for limit **0** and 57% chance for limit **1-100**.
+- Fourth player would cause 27% chance for limit **0** and 73% chance for limit **1-100**.
+- So even when both options are always possible, more players increase the chance for stronger events.
 
 ## Credits
 
