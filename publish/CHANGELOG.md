@@ -1,3 +1,8 @@
+- v1.5
+  - Adds a new field `playerLimit` to filter events by the amount of nearby players.
+  - Adds a new field `playerDistance` to set the distance of nearby players.
+  - Changes the field `nearBaseOnly` to support numbers.
+
 - v1.4
   - Adds a new field `faction` to spawn data. Requires using Expand World Factions.
   - Adds a new setting to check event roll for each player separately.

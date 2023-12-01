@@ -21,11 +21,9 @@ public class CheckPerPlayer
     // Negative dt because original function runs.
     __instance.m_eventTimer = -dt;
     RandEventSystem.RefreshPlayerEventData();
-    var players = RandEventSystem.playerEventDatas.ToList();
-    foreach (var player in players)
+    foreach (var player in RandEventSystem.RefreshPlayerEventData())
     {
       if (Random.Range(0f, 100f) > __instance.m_eventChance / Game.m_eventRate) continue;
-      RandEventSystem.playerEventDatas = [player];
       var events = GetPossibleRandomEvents(__instance, player);
       if (events.Count == 0) continue;
       var ev = events[Random.Range(0, events.Count)];

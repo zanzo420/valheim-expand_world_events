@@ -40,32 +40,46 @@ All settings are server side:
 
 Client side fields:
 
-- name: Identifier.
+- **name**: Identifier.
   - Multiple events can have the same name. This allows creating multiple configurations.
   - Client side fields always come from the first event. Recommended to not include these in the extra configurations.
-- spawns: List of spawned objects.
+- **spawns**: List of spawned objects.
   - See [Expand World Spawns](https://github.com/JereKuusela/valheim-expand_world_spawns/#Configuration) for more info.
   - Usually these have lower spawn times and less restrictions compared to normal spawns.
-- startMessage: Message shown on the screen during the event.
-- endMessage: Message shown on the screen when the event ends.
-- forceMusic: Event music.
-- forceEnvironment: Event environment/weather.
+- **startMessage**: Message shown on the screen during the event.
+- **endMessage**: Message shown on the screen when the event ends.
+- **forceMusic**: Event music.
+- **forceEnvironment**: Event environment/weather.
 
 Server side fields:
 
-- enabled (default: `true`): Quick way to disable this entry.
-- duration (default: `60` seconds): How long the event lasts.
-- nearBaseOnly (default: `true`): Only triggers when near 3 player base items.
-- pauseIfNoPlayerInArea (default: `true`): The event timer pauses if no player in the area.
-- biome: List of required biomes.
-- random (default: `true`): The event can happen randomly (unlike boss events which happen when near a boss).
-- requiredEnvironments: List of valid environments/weathers. Checked by the server so using `env` command in the client doesn't affect this.
-- requiredGlobalKeys: Event becomes available if the world has any of these keys.
-- notRequiredGlobalKeys: Event is not available if the world has any of these keys.
-- requiredPlayerKeys: Event becomes available if the player has any of these keys.
-- notRequiredPlayerKeys: Event is not available if the player has any of these keys.
-- requiredKnownItems: Event becomes available if the player knows any of these items.
-- notRequiredKnownItems: Event is not available if the player knows any of these items.
+- **enabled**: Quick way to disable this entry.
+  - Default value is `true`.
+- **duration**: How long the event lasts.
+  - Default value is `60` seconds.
+- **nearBaseOnly**: How many player base items are required within 40 meters.
+  - Default value is `3` items.
+  - Value `true` counts as 3 items and `false` as 0 items.
+- **pauseIfNoPlayerInArea**: The event timer pauses if no player in the area.
+  - Default value is `true`.
+- **biome**: List of required biomes.
+  - Default value is any biome.
+- **random**: The event can happen randomly (unlike boss events which happen when near a boss).
+  - Default value is `true`.
+- **requiredEnvironments**: List of valid environments/weathers.
+  - Checked by the server so using `env` command in the client doesn't affect this.
+- **requiredGlobalKeys**: Event becomes available if the world has any of these keys.
+- **notRequiredGlobalKeys**: Event is not available if the world has any of these keys.
+- **requiredPlayerKeys**: Event becomes available if the player has any of these keys.
+- **notRequiredPlayerKeys**: Event is not available if the player has any of these keys.
+- **requiredKnownItems**: Event becomes available if the player knows any of these items.
+- **notRequiredKnownItems**: Event is not available if the player knows any of these items.
+- **playerLimit**: Amount of required players in the area (`min-max`).
+  - Default value is no limit.
+  - This is checked around the player that triggered the event. The player itself is also included.
+  - Both values are inclusive. For example `1-4` would trigger with 1, 2, 3 or 4 players.
+- **playerDistance**: Distance from the triggering player.
+  - Default value is `100` meters.
 
 ## Credits
 

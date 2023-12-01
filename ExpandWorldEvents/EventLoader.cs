@@ -8,7 +8,7 @@ namespace ExpandWorld.Event;
 
 public class Loader
 {
-  public static Dictionary<RandomEvent, List<string>> EventToRequirentEnvironment = [];
+  public static Dictionary<RandomEvent, ExtraData> ExtraData = [];
 
   public static RandomEvent FromData(Data data)
   {
@@ -19,7 +19,7 @@ public class Loader
       m_enabled = data.enabled,
       m_random = data.random,
       m_duration = data.duration,
-      m_nearBaseOnly = data.nearBaseOnly,
+      m_nearBaseOnly = data.nearBaseOnly != "false",
       m_pauseIfNoPlayerInArea = data.pauseIfNoPlayerInArea,
       m_biome = DataManager.ToBiomes(data.biome),
       m_requiredGlobalKeys = DataManager.ToList(data.requiredGlobalKeys),
@@ -33,7 +33,7 @@ public class Loader
       m_forceMusic = data.forceMusic,
       m_forceEnvironment = data.forceEnvironment
     };
-    EventToRequirentEnvironment[random] = DataManager.ToList(data.requiredEnvironments);
+    ExtraData[random] = new(data);
     return random;
   }
   public static Data ToData(RandomEvent random)
@@ -45,7 +45,7 @@ public class Loader
       enabled = random.m_enabled,
       random = random.m_random,
       duration = random.m_duration,
-      nearBaseOnly = random.m_nearBaseOnly,
+      nearBaseOnly = random.m_nearBaseOnly ? "3" : "0",
       pauseIfNoPlayerInArea = random.m_pauseIfNoPlayerInArea,
       biome = DataManager.FromBiomes(random.m_biome),
       requiredGlobalKeys = DataManager.FromList(random.m_requiredGlobalKeys),

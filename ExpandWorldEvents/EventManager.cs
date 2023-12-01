@@ -37,7 +37,7 @@ public class Manager
   {
     if (Helper.IsServer() && Originals.Count == 0)
       Originals = [.. RandEventSystem.instance.m_events];
-    Loader.EventToRequirentEnvironment.Clear();
+    Loader.ExtraData.Clear();
     if (yaml == "") return;
     try
     {
