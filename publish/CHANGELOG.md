@@ -1,3 +1,6 @@
+- v1.6
+  - Updated for the new Expand World Data features.
+
 - v1.5
   - Adds a new field `eventLimit` to filter events by the amount of nearby events (when Multiple Events is on).
   - Adds a new field `playerLimit` to filter events by the amount of nearby players.

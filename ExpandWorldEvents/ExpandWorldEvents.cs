@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using BepInEx;
 using BepInEx.Logging;
@@ -9,12 +8,12 @@ using Service;
 using UnityEngine;
 namespace ExpandWorld;
 [BepInPlugin(GUID, NAME, VERSION)]
-[BepInDependency("expand_world_data", "1.22")]
+[BepInDependency("expand_world_data", "1.23")]
 public class EWE : BaseUnityPlugin
 {
   public const string GUID = "expand_world_events";
   public const string NAME = "Expand World Events";
-  public const string VERSION = "1.5";
+  public const string VERSION = "1.6";
 #nullable disable
   public static ManualLogSource Log;
 #nullable enable

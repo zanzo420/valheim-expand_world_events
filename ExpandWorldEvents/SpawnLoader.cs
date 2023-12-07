@@ -57,7 +57,7 @@ public class Loader
     if (data.faction != "")
     {
       var factionData = new ZDOData();
-      factionData.Strings[HashFaction] = data.faction;
+      factionData.Strings[HashFaction] = new(data.faction);
       if (Data.ContainsKey(spawn))
         Data[spawn] = ZDOData.Merge(Data[spawn], factionData);
       else
