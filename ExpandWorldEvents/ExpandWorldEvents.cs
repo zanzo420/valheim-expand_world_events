@@ -13,7 +13,7 @@ public class EWE : BaseUnityPlugin
 {
   public const string GUID = "expand_world_events";
   public const string NAME = "Expand World Events";
-  public const string VERSION = "1.6";
+  public const string VERSION = "1.7";
 #nullable disable
   public static ManualLogSource Log;
 #nullable enable

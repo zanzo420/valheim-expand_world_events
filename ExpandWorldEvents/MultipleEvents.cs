@@ -58,8 +58,10 @@ public class MultipleEvents
     if (ev == null)
     {
       // For stopevent command.
-      Events.ForEach(x => x.Event.OnStop());
-      Events.Clear();
+      // Copy becasuse OnStop() can start new events.
+      var toStop = Events.ToList();
+      toStop.ForEach(x => x.Event.OnStop());
+      Events.RemoveAll(toStop.Contains);
       return false;
     }
     var nearbyEvents = Events.Where(x => Utils.DistanceXZ(x.Event.m_pos, pos) < Configuration.EventMinimumDistance).ToList();

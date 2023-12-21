@@ -46,6 +46,12 @@ public class Data
   public string playerLimit = "";
   [DefaultValue("")]
   public string eventLimit = "";
+
+  [DefaultValue(null)]
+  public string[]? startCommands = null;
+
+  [DefaultValue(null)]
+  public string[]? endCommands = null;
 }
 public class ExtraData
 {
@@ -54,6 +60,8 @@ public class ExtraData
   public Range<int>? PlayerLimit;
   public int BaseValue = 3;
   public Range<int>? EventLimit;
+  public string[]? StartCommands;
+  public string[]? EndCommands;
 
   public ExtraData(Data data)
   {
@@ -65,5 +73,7 @@ public class ExtraData
       EventLimit = Parse.IntRange(data.eventLimit);
     if (data.nearBaseOnly != "true")
       BaseValue = Parse.Int(data.nearBaseOnly, 0);
+    StartCommands = data.startCommands;
+    EndCommands = data.endCommands;
   }
 }
