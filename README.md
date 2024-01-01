@@ -57,6 +57,10 @@ Client side fields:
 - **endMessage**: Message shown on the screen when the event ends.
 - **forceMusic**: Event music.
 - **forceEnvironment**: Event environment/weather.
+- **requiredPlayerKeys**: Event becomes available if the player has any of these keys.
+- **notRequiredPlayerKeys**: Event is not available if the player has any of these keys.
+- **requiredKnownItems**: Event becomes available if the player knows any of these items.
+- **notRequiredKnownItems**: Event is not available if the player knows any of these items.
 
 Server side fields:
 
@@ -77,10 +81,6 @@ Server side fields:
   - Checked by the server so using `env` command in the client doesn't affect this.
 - **requiredGlobalKeys**: Event becomes available if the world has any of these keys.
 - **notRequiredGlobalKeys**: Event is not available if the world has any of these keys.
-- **requiredPlayerKeys**: Event becomes available if the player has any of these keys.
-- **notRequiredPlayerKeys**: Event is not available if the player has any of these keys.
-- **requiredKnownItems**: Event becomes available if the player knows any of these items.
-- **notRequiredKnownItems**: Event is not available if the player knows any of these items.
 - **playerLimit**: Amount of required players in the area (`min-max`).
   - This can be used to trigger stronger events when more players are nearby.
   - The value is inclusive. For example `1-2` would trigger with 1 and 2 players.
